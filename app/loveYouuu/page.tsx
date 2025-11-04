@@ -9,7 +9,7 @@ export default function Page() {
     router.push("/noButton");
   };
   const yesButton = () => {
-    router.push("yesButton")
+    router.push("/pictures")
   }
 
   return (
