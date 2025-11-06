@@ -1,34 +1,42 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Page = () => {
   const router = useRouter();
   const [opened, setOpened] = useState(false);
+  const [hearts, setHearts] = useState<number[]>([]);
+
+  useEffect(() => {
+    setHearts(Array.from({ length: 20 }, (_, i) => i));
+  }, []);
 
   return (
     <div className="min-h-screen relative overflow-hidden flex flex-col items-center justify-center bg-gradient-to-br from-pink-100 via-rose-200 to-rose-300">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ y: "100vh", x: Math.random() * window.innerWidth }}
-            animate={{
-              y: ["100vh", "-10vh"],
-              opacity: [0, 1, 0],
-              x: Math.random() * window.innerWidth,
-            }}
-            transition={{
-              duration: 10 + Math.random() * 10,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-            }}
-            className="absolute text-rose-400 text-2xl"
-          >
-            ❤️
-          </motion.div>
-        ))}
+        {hearts.map((i) => {
+          const randomX = Math.random() * window.innerWidth;
+          return (
+            <motion.div
+              key={i}
+              initial={{ y: "100vh", x: randomX }}
+              animate={{
+                y: ["100vh", "-10vh"],
+                opacity: [0, 1, 0],
+                x: randomX,
+              }}
+              transition={{
+                duration: 10 + Math.random() * 10,
+                repeat: Infinity,
+                delay: Math.random() * 5,
+              }}
+              className="absolute text-rose-400 text-2xl"
+            >
+              ❤️
+            </motion.div>
+          );
+        })}
       </div>
       <div className="fixed top-4 left-1/2 -translate-x-1/2 flex items-center justify-center gap-6 bg-white/40 backdrop-blur-lg border border-white/70 rounded-full px-8 py-3 shadow-lg z-50">
         <button
